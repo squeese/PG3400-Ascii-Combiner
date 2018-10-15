@@ -1,17 +1,20 @@
 CC = gcc
 FLAGS = -Wall -g -Wextra
-TARGET = view
+TARGET = main
 
-$(TARGET): view.o parser.o
-	$(CC) $(FLAGS) -o $(TARGET) view.o parser.o
+$(TARGET): directories build/main.o build/parser.o
+	$(CC) $(FLAGS) -o $(TARGET) build/main.o build/parser.o
 
-view.o: view.c
-	$(CC) $(FLAGS) -c -o view.o view.c
+directories:
+	mkdir -p build
 
-parser.o: parser.c
-	$(CC) $(FLAGS) -c -o parser.o parser.c
+build/main.o: src/main.c
+	$(CC) $(FLAGS) -c -o build/main.o src/main.c
+
+build/parser.o: src/parser.c
+	$(CC) $(FLAGS) -c -o build/parser.o src/parser.c
 
 clean:
-	rm -f *.o *.txt $(TARGET)
+	rm -f build/*.o *.txt $(TARGET)
 
 remake: clean $(TARGET)
