@@ -15,7 +15,7 @@
     2) Create a temporary string buffer which represents a complete
        ascii line, and that size depends on the max X value gathered.
        Then one can loop and read to populate the buffer from the correct
-       puzzle pieces, and write to output file.
+       puzzle pieces, and write to output file, until all lines written.
 
   To build the program, I have made a Makefile to make the process easier.
   The commands are:
