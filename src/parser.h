@@ -4,9 +4,9 @@
 #include <dirent.h>
 #include <stdio.h>
 
-int p_parse(const char* path, const char* out);
-int p_scan(const char* path, int* const x, int* const y, char** name);
-int p_open_output(FILE** fd, char** path, const char* out, const char* name);
+int p_parse(char* path, char* out);
+int p_scan(char* path, int* x, int* y, char** name);
+int p_open_output(FILE** fd, char** path, char* out, char* name);
 int p_max(int a, int b);
 int p_num_digits(int value);
 

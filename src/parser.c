@@ -4,7 +4,7 @@
 #include <math.h>
 #include <ctype.h>
 
-int p_parse(const char* in_arg, const char* out_arg) {
+int p_parse(char* in_arg, char* out_arg) {
   int max_x = 0;
   int max_y = 0;
   char* name = NULL;
@@ -111,7 +111,7 @@ int p_parse(const char* in_arg, const char* out_arg) {
   return EXIT_SUCCESS;
 }
 
-int p_scan(const char* path, int* const x, int* const y, char** name) {
+int p_scan(char* path, int* x, int* y, char** name) {
   DIR *dir = opendir(path);
   if (dir == NULL) {
     printf("Unable to open directory '%s'\n", path);
@@ -152,7 +152,7 @@ int p_scan(const char* path, int* const x, int* const y, char** name) {
   return EXIT_SUCCESS;
 }
 
-int p_open_output(FILE** fd, char** path, const char* out, const char* name) {
+int p_open_output(FILE** fd, char** path, char* out, char* name) {
   // When creating a output file descriptor, we need to figure out the pathname of the file.
   if (out != NULL) {
     // If the user passes in a value as the second argument in command line, we use that one.
