@@ -25,6 +25,6 @@
 
   To run the program:
     ./combine                  - shows arguments
-    ./combine wolf             - combines the wolf to wolf.txt
-    ./combine mickey out.txt   - combines the wolf to out.txt
+    ./combine wolf             - combines the wolf ascii to wolf.txt
+    ./combine mickey out.txt   - combines the mickey ascii to out.txt
 
