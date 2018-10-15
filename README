@@ -1,0 +1,30 @@
+
+  I decided to make a program that takes two arguments:
+   1) folder    required   - the path to the folder containing the ascii puzzle files
+   2) filename  optional   - the path to the file where the ascii pieces should be assembled
+
+  If you dont pass in the second argument, it will fallback to a default one, which is the
+  'name' portion of the puzzle files filename. Ex; part_0_0_wolf.txt would result in
+  output filename: wolf.txt.
+
+  The program can be generalized into two steps:
+    1) Gather information about the ascii puzzle pieces, and that being:
+      - the max X value in the puzzle filename pieces
+      - the max Y value in the puzzle filename pieces
+      - the name from the first puzzle filename
+    2) Create a temporary string buffer which represents a complete
+       ascii line, and that size depends on the max X value gathered.
+       Then one can loop and read to populate the buffer from the correct
+       puzzle pieces, and write to output file.
+
+  To build the program, I have made a Makefile to make the process easier.
+  The commands are:
+    make          - create a dev build
+    make build    - create an -O3 optimized build
+    make clean
+
+  To run the program:
+    ./combine                  - shows arguments
+    ./combine wolf             - combines the wolf to wolf.txt
+    ./combine mickey out.txt   - combines the wolf to out.txt
+

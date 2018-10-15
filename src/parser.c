@@ -3,6 +3,7 @@
 #include <string.h>
 #include <math.h>
 #include <ctype.h>
+#include <errno.h>
 
 int p_parse(char* in_arg, char* out_arg) {
   int max_x = 0;
@@ -62,8 +63,7 @@ int p_parse(char* in_arg, char* out_arg) {
     for (x = 0; x <= max_x; x++) {
       snprintf(in_path_buffer, in_path_len, "%s/part_%d_%d_%s.txt", in_arg, x, y, name);
       if ((in_fds[x] = fopen(in_path_buffer, "r")) == NULL) {
-        printf("Unable to open input file (col:%d) '%s' \n", max_x, in_path_buffer);
-        perror("Error: ");
+        printf("Unable to open input file (col:%d) '%s'. Error: %s \n", max_x, in_path_buffer, strerror(errno));
         // Stuff went wrong when opening one of the input files, make sure we clean stuff up
         // before exiting.
         fclose(out_fd);
@@ -114,7 +114,7 @@ int p_parse(char* in_arg, char* out_arg) {
 int p_scan(char* path, int* x, int* y, char** name) {
   DIR *dir = opendir(path);
   if (dir == NULL) {
-    printf("Unable to open directory '%s'\n", path);
+    printf("Unable to open directory '%s'. Error: %s\n", path, strerror(errno));
     return EXIT_FAILURE;
   }
   // These pointers are used to point to the X and Y positions in the filename string:
@@ -168,8 +168,7 @@ int p_open_output(FILE** fd, char** path, char* out, char* name) {
   }
   // Lets try create a file at the deduced path, fingers crossed
   if ((*fd = fopen(*path, "w+")) == NULL) {
-    printf("Unable to open output file '%s' \n", *path);
-    perror("Error: ");
+    printf("Unable to open output file '%s'. Error: %s\n", *path, strerror(errno));
     return EXIT_FAILURE;
   }
   return EXIT_SUCCESS;
