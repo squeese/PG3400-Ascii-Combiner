@@ -1,5 +1,5 @@
 build
 *.o
-*.txt
+./*.txt
 main
 .DS_Store
