@@ -38,8 +38,8 @@ int p_parse(char* in_arg, char* out_arg) {
   // we can reuse the same string buffer for the pathname, we just have to know the max
   // length the filename can be, given the NAME, X and Y values.
   // Note: not strictly neccesary, given the example input, but a fun excercise, it was.
-  int in_path_len = strlen(in_arg) + p_num_digits(max_x) + p_num_digits(max_y) + strlen(name) + 16;
-  char* in_path_buffer = (char*) calloc(in_path_len, sizeof(char));
+  int in_path_len = strlen(in_arg) + p_num_digits(max_x) + p_num_digits(max_y) + strlen(name) + 15;
+  char* in_path_buffer = (char*) malloc(in_path_len * sizeof(char));
 
   // String buffer for we store chunks for data in when reading from files,
   // which is then used to write to the output file.
@@ -157,18 +157,8 @@ int p_open_output(FILE** fd, char** path, char* out, char* name) {
   if (out != NULL) {
     // If the user passes in a value as the second argument in command line, we use that one.
     int len = strlen(out) + 1;
-    *path = malloc(len * sizeof(char));
+    *path = calloc(len, sizeof(char));
     memcpy(*path, out, len);
-    // Need to trim the whitespace off the end of the string, commandline args can tag on the \n it seems
-    // https://gist.github.com/kenkam/790090
-    // Create a char pointer to the end of the string
-    /*
-    char *end = *path + len - 1;
-    // Move it backwards while it finds a whitespace
-    while (end > *path && isspace(*end)) end--;
-    // When it moved past all whitespace, add null terminator after current character
-    *(end+1) = '\0';
-    */
   } else {
     // Or use the name parsed from the filenames as the base for output filename.
     // We need to add .txt to the extension aswell.

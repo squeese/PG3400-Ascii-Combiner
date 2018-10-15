@@ -15,7 +15,7 @@ build/parser.o: src/parser.c
 	$(CC) $(FLAGS) -c -o build/parser.o src/parser.c
 
 clean:
-	rm -rf build *.txt $(TARGET)
+	rm -rf build grind.log *.txt $(TARGET)
 
 remake: clean $(TARGET)
 
