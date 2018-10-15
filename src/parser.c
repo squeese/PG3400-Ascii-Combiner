@@ -39,7 +39,7 @@ int p_parse(char* in_arg, char* out_arg) {
   // length the filename can be, given the NAME, X and Y values.
   // Note: not strictly neccesary, given the example input, but a fun excercise, it was.
   int in_path_len = strlen(in_arg) + p_num_digits(max_x) + p_num_digits(max_y) + strlen(name) + 16;
-  char* in_path_buffer = (char*) malloc(in_path_len * sizeof(char));
+  char* in_path_buffer = (char*) calloc(in_path_len, sizeof(char));
 
   // String buffer for we store chunks for data in when reading from files,
   // which is then used to write to the output file.
@@ -144,7 +144,7 @@ int p_scan(char* path, int* x, int* y, char** name) {
       // the given: (1: total length of the filename) and (2: the y_ptr position)
       // (length of filename) - (y_ptr offset from beginning of filename) - (length of trailing ".txt" text)
       int size = length - (int)(y_ptr - entry->d_name) - 5;
-      *name = (char*) malloc(sizeof(char) * size);
+      *name = (char*) calloc(size + 1, sizeof(char));
       memcpy(*name, y_ptr + 1, size);
     }
   }
@@ -156,17 +156,19 @@ int p_open_output(FILE** fd, char** path, char* out, char* name) {
   // When creating a output file descriptor, we need to figure out the pathname of the file.
   if (out != NULL) {
     // If the user passes in a value as the second argument in command line, we use that one.
-    int len = strlen(out);
+    int len = strlen(out) + 1;
     *path = malloc(len * sizeof(char));
     memcpy(*path, out, len);
     // Need to trim the whitespace off the end of the string, commandline args can tag on the \n it seems
     // https://gist.github.com/kenkam/790090
     // Create a char pointer to the end of the string
+    /*
     char *end = *path + len - 1;
     // Move it backwards while it finds a whitespace
     while (end > *path && isspace(*end)) end--;
     // When it moved past all whitespace, add null terminator after current character
     *(end+1) = '\0';
+    */
   } else {
     // Or use the name parsed from the filenames as the base for output filename.
     // We need to add .txt to the extension aswell.
