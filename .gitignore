@@ -2,3 +2,4 @@ build
 *.o
 *.txt
 main
+.DS_Store
