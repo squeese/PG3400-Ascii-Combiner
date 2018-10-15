@@ -4,4 +4,4 @@ build
 main
 combine
 .DS_Store
-grind.*
+grind.log
