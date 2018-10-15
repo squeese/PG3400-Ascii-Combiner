@@ -2,7 +2,7 @@
 #define ASCI_GRID_PARSER
 
 #include <dirent.h>
-#include <stdio.h>    // perror
+#include <stdio.h>
 
 int p_parse(const char* path, const char* out);
 int p_scan(const char* path, int* const x, int* const y, char** name);
