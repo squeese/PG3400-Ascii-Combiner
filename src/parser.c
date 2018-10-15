@@ -38,7 +38,7 @@ int p_parse(const char* in_arg, const char* out_arg) {
   // we can reuse the same string buffer for the pathname, we just have to know the max
   // length the filename can be, given the NAME, X and Y values.
   // Note: not strictly neccesary, given the example input, but a fun excercise, it was.
-  int in_path_len = strlen(in_arg) + log10(max_x) + log10(max_y) + strlen(name) + 16;
+  int in_path_len = strlen(in_arg) + p_num_digits(max_x) + p_num_digits(max_y) + strlen(name) + 16;
   char* in_path_buffer = (char*) malloc(in_path_len * sizeof(char));
 
   // String buffer for we store chunks for data in when reading from files,
@@ -133,10 +133,10 @@ int p_scan(const char* path, int* const x, int* const y, char** name) {
     // We then read and convert the value from string to int,
     // but we will only store the largest value we can find, since its the only one that matters
     // Note: could check integrity of the grid, I guess, but we assume its correct, the examples are.
-    *x = (int)fmaxl((long)*x, strtol(x_ptr, &y_ptr, 10));
+    *x = p_max(*x, (int)strtol(x_ptr, &y_ptr, 10));
     // When reading the X value with strtol, we can pass along a ptr that will point to the position after
     // the value read was converted to int (the x value), we now know where the Y value starts.
-    *y = (int)fmaxl((long)*y, strtol(y_ptr + 1, &y_ptr, 10));
+    *y = p_max(*y, (int)strtol(y_ptr + 1, &y_ptr, 10));
     // We use the same fact, to move the y_ptr to the end of the Y value, so we know the position of the NAME
     // value aswell.
     if (*name == NULL) {
@@ -181,4 +181,12 @@ int p_open_output(FILE** fd, char** path, const char* out, const char* name) {
     return EXIT_FAILURE;
   }
   return EXIT_SUCCESS;
+}
+
+int p_max(int a, int b) {
+  return a > b ? a : b;
+}
+
+int p_num_digits(int value) {
+  return (int)log10((double) value);
 }
